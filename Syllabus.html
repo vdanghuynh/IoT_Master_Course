@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced IoT Technology | Course Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Vibrant Tech (Blue/Cyan/Amber) -->
+    <!-- 
+         Primary: #2563EB (Blue-600)
+         Secondary: #06B6D4 (Cyan-500)
+         Accent: #F59E0B (Amber-500)
+         Background: #F8FAFC (Slate-50)
+         Text: #1E293B (Slate-800)
+    -->
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Chart Container Styling Rules */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width constraint */
+            height: 300px;    /* Base height */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px; /* Tablet height */
+            }
+        }
+        
+        /* Custom Scrollbar for Project List */
+        .project-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .project-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .project-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .project-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Card Hover Effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Active Tab State */
+        .tab-active {
+            border-bottom: 2px solid #2563EB;
+            color: #2563EB;
+            font-weight: 600;
+        }
+    </style>
+
+    <!-- 
+        Application Structure Plan:
+        1. Hero Section: Hook with "Cognitive Twin" concept and key 2025 stats.
+        2. Dashboard Section: High-level metrics (Device growth) and Course Philosophy (Levels of Complexity).
+        3. Syllabus Section (Interactive): 12-Week Timeline. Users click weeks to see deep-dive topics/readings.
+        4. Project Hub (Interactive): A filterable grid of the 20 Capstone Projects. Users filter by 'Industry' or 'Home'.
+        5. Assessment Section: Charts showing grading breakdown and target skill mix.
+        6. Footer: Standard course info.
+    -->
+    
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-black text-blue-600 tracking-tighter">IoT<span class="text-slate-800">MASTER</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="scrollToSection('overview')" class="text-slate-600 hover:text-blue-600 text-sm font-medium">Overview</button>
+                    <button onclick="scrollToSection('syllabus')" class="text-slate-600 hover:text-blue-600 text-sm font-medium">Syllabus</button>
+                    <button onclick="scrollToSection('projects')" class="text-slate-600 hover:text-blue-600 text-sm font-medium">Projects</button>
+                    <button onclick="scrollToSection('assessment')" class="text-slate-600 hover:text-blue-600 text-sm font-medium">Assessment</button>
+                </div>
+                <!-- Mobile Menu Button (Simplified for SPA) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-blue-600 focus:outline-none font-bold">MENU</button>
+                </div>
+            </div>
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-2">
+                    <button onclick="scrollToSection('overview')" class="text-left px-2 py-1 text-slate-600">Overview</button>
+                    <button onclick="scrollToSection('syllabus')" class="text-left px-2 py-1 text-slate-600">Syllabus</button>
+                    <button onclick="scrollToSection('projects')" class="text-left px-2 py-1 text-slate-600">Projects</button>
+                    <button onclick="scrollToSection('assessment')" class="text-left px-2 py-1 text-slate-600">Assessment</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-cyan-600 text-white pt-20 pb-24 px-4">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
+                From Telemetry to <span class="text-amber-400">Cognition</span>
+            </h1>
+            <p class="text-xl md:text-2xl font-light text-blue-50 max-w-3xl mx-auto mb-10">
+                Advanced Internet of Things Technology (M.Sc. 2025-2026)<br>
+                <span class="text-sm font-medium opacity-80 mt-2 block">Edge AI • Digital Twins • Matter • Generative AI</span>
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="scrollToSection('projects')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
+                    Explore Projects
+                </button>
+                <button onclick="scrollToSection('syllabus')" class="bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-full border border-white/30 backdrop-blur-sm transition">
+                    View Schedule
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 -mt-16 mb-20 relative z-10">
+
+        <!-- Section 1: Overview & Complexity Framework -->
+        <section id="overview" class="mb-20">
+            <!-- Intro Paragraph -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                <div class="max-w-3xl mx-auto text-center mb-10">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Course Context</h2>
+                    <p class="text-slate-600 text-lg">
+                        As connected devices surge toward 39.9 billion by 2025, the demand for engineers who can bridge the gap between hardware and cognitive intelligence is critical. This course abandons the "hobbyist" approach to focus on scalable, secure, and autonomous systems.
+                    </p>
+                </div>
+
+                <!-- Visualization: Market Context (Simple Stat) -->
+                <!-- Visualization & Content Choice: Simple Chart.js Bar to show scale. Goal: Inform/Context -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">The "Levels of Complexity" Framework</h3>
+                        <p class="text-slate-600 mb-6 text-sm">
+                            We do not grade based on the "type" of project. We grade based on the <strong>depth of integration</strong>. Every group starts at Level 1 and aspires to reach Level 3.
+                        </p>
+                        
+                        <!-- Interactive Complexity Accordion -->
+                        <div class="space-y-4" id="complexity-accordion">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-50 rounded-xl p-6 border border-slate-100">
+                        <h4 class="text-sm font-bold text-slate-500 uppercase mb-4 text-center">IoT Device Growth Projection (Billions)</h4>
+                        <div class="chart-container">
+                            <canvas id="growthChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-400 mt-2">Source: Industry Analysis 2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Interactive Syllabus -->
+        <section id="syllabus" class="mb-20">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-900">12-Week Roadmap</h2>
+                <p class="text-slate-600 mt-2">Click on any week to reveal the learning modules and lab focus.</p>
+            </div>
+
+            <!-- Tab Navigation for Phases -->
+            <div class="flex justify-center mb-8 border-b border-slate-200">
+                <button id="tab-phase1" class="px-6 py-3 text-lg font-medium tab-active transition-colors" onclick="switchPhase('phase1')">
+                    Phase 1: Theory (Weeks 1-8)
+                </button>
+                <button id="tab-phase2" class="px-6 py-3 text-lg font-medium text-slate-500 hover:text-slate-800 transition-colors" onclick="switchPhase('phase2')">
+                    Phase 2: Project Sprints (Weeks 9-12)
+                </button>
+            </div>
+
+            <!-- Timeline Grid -->
+            <div id="syllabus-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- JS will populate weeks here -->
+            </div>
+            
+            <!-- Detail View Modal (Inline) -->
+            <div id="week-detail" class="hidden mt-8 bg-blue-50 border border-blue-100 rounded-xl p-6 shadow-inner transition-all duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                    <div>
+                        <span id="detail-week-num" class="text-xs font-bold text-blue-600 uppercase tracking-wide">Week X</span>
+                        <h3 id="detail-title" class="text-2xl font-bold text-slate-900">Module Title</h3>
+                    </div>
+                    <button onclick="closeDetail()" class="text-slate-400 hover:text-slate-600 mt-2 md:mt-0">Close ✕</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-2">Key Topics</h4>
+                        <ul id="detail-topics" class="list-disc list-inside text-slate-600 space-y-1 text-sm"></ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-2">Lab/Deliverable</h4>
+                        <p id="detail-lab" class="text-slate-600 text-sm bg-white p-3 rounded border border-blue-100"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Capstone Projects (Filterable) -->
+        <section id="projects" class="mb-20">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900">Capstone Project Menu</h2>
+                    <p class="text-slate-600 mt-2 max-w-xl">
+                        Select a vertical. Your goal is to build a "Vertical Slice" solution achieving Level 3 complexity: Hardware + Edge AI + Twin + GenAI.
+                    </p>
+                </div>
+                <!-- Filters -->
+                <div class="flex space-x-2 mt-4 md:mt-0 overflow-x-auto pb-1">
+                    <button onclick="filterProjects('all')" class="filter-btn bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:bg-slate-700 transition">All</button>
+                    <button onclick="filterProjects('Industry')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition">Industry 4.0</button>
+                    <button onclick="filterProjects('City')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition">Smart City</button>
+                    <button onclick="filterProjects('Health')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition">Healthcare</button>
+                    <button onclick="filterProjects('Home')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition">Smart Home</button>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- JS will populate projects -->
+            </div>
+        </section>
+
+        <!-- Section 4: Assessment -->
+        <section id="assessment" class="bg-white rounded-2xl shadow-xl p-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-900">Assessment & Skills</h2>
+                <p class="text-slate-600 mt-2">How we measure success and the profile of a graduate.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Grading Chart -->
+                <div class="flex flex-col items-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4">Grading Composition</h3>
+                    <div class="chart-container">
+                        <canvas id="assessmentChart"></canvas>
+                    </div>
+                    <div class="mt-6 text-sm text-slate-500 text-center max-w-sm">
+                        50% of the grade comes from the technical implementation of the Capstone project, incentivizing the "Level 3" integration.
+                    </div>
+                </div>
+
+                <!-- Skills Radar -->
+                <!-- Visualization Choice: Radar Chart to show the "T-shaped" skill profile mentioned in text. Goal: Compare/Profile -->
+                <div class="flex flex-col items-center">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4">Target Skill Profile</h3>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <div class="mt-6 text-sm text-slate-500 text-center max-w-sm">
+                        Graduates develop deep expertise in Embedded Systems & Networking while gaining breadth in AI & Business Logic.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="mb-4 text-slate-300 font-bold text-lg">M.Sc. Advanced Internet of Things Technology</p>
+            <p class="text-sm">Based on the 2025-2026 Academic Curriculum.</p>
+            <div class="mt-8 pt-8 border-t border-slate-800 text-xs">
+                Generated for Course Planning Visualization. No SVG or Mermaid JS used.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- DATA STORE ---
+
+        const complexityLevels = [
+            {
+                level: 1,
+                title: "The Connected Twin",
+                tagline: "It Works",
+                color: "border-l-4 border-slate-400",
+                desc: "Baseline requirement. Physical sensors reading real data, transmitting via MQTT/CoAP to a basic dashboard.",
+                reqs: ["Real Hardware", "MQTT/CoAP", "Line Graph Viz"]
+            },
+            {
+                level: 2,
+                title: "The Intelligent Edge",
+                tagline: "It Thinks",
+                color: "border-l-4 border-cyan-500",
+                desc: "Advanced tier. Includes TinyML running on-device for anomaly detection (not cloud AI) OR a high-fidelity 3D/Map Twin.",
+                reqs: ["TinyML (Edge)", "Anomaly Detection", "3D/Map Twin"]
+            },
+            {
+                level: 3,
+                title: "The Cognitive System",
+                tagline: "It Speaks",
+                color: "border-l-4 border-amber-500",
+                desc: "State-of-the-Art. Integrates Generative AI (LLM) to analyze logs and generate natural language insights or code.",
+                reqs: ["GenAI Integration", "Natural Language UI", "Autonomous Insights"]
+            }
+        ];
+
+        const syllabusData = {
+            phase1: [
+                { week: 1, title: "Modern IoT Stack", topic: "Digital Twins & DTDL", lab: "Group Formation & Skill Mapping", desc: "Moving from telemetry to modeling. Intro to JSON-LD and Digital Twin Definition Language." },
+                { week: 2, title: "Edge Intelligence I", topic: "TinyML Workflow", lab: "Release Project Menu", desc: "Quantization, Pruning, and deploying TFLite Micro on Cortex-M microcontrollers." },
+                { week: 3, title: "Edge Intelligence II", topic: "Privacy & Federation", lab: "Project Proposal Due", desc: "Federated Learning and Containerization (K3s) on Edge Gateways." },
+                { week: 4, title: "Connectivity I", topic: "Matter & Thread", lab: "Protocol Analysis", desc: "Solving local interoperability with IPv6-based Matter protocol." },
+                { week: 5, title: "Connectivity II", topic: "Satellite IoT (NTN)", lab: "Link Budget Calc", desc: "LoRaWAN and 3GPP Rel 17/18 standards for Non-Terrestrial Networks." },
+                { week: 6, title: "Generative AI", topic: "AIoT & LLMs", lab: "GenAI API Integration", desc: "Running SLMs at the edge and using GenAI for semantic query parsing." },
+                { week: 7, title: "Zero Trust Security", topic: "Hardware Roots of Trust", lab: "Threat Modeling", desc: "Device Identity (X.509), SPIFFE, and Secure Boot sequences." },
+                { week: 8, title: "System Architecture", topic: "Optimization Strategies", lab: "Design Review", desc: "Time-Series vs Graph Databases. Latency budgeting. Final design check." }
+            ],
+            phase2: [
+                { week: 9, title: "Hardware Sprint", topic: "Level 1 Defense", lab: "Connectivity Demo", desc: "Proving the physical link is robust. Power budget defense." },
+                { week: 10, title: "Intelligence Sprint", topic: "Level 2 Defense", lab: "Edge AI / Twin Demo", desc: "Proving the device is smart (TinyML) or the Twin is high-fidelity." },
+                { week: 11, title: "Cognitive Sprint", topic: "Level 3 Defense", lab: "GenAI Demo", desc: "Proving semantic value. GenAI integration demo." },
+                { week: 12, title: "Final Capstone", topic: "End-to-End Demo", lab: "Final Presentation", desc: "Full scenario walkthrough and technical report submission." }
+            ]
+        };
+
+        const projects = [
+            { id: 1, cat: "Industry", title: "Self-Diagnosing Motor", desc: "Vibration analysis (Edge AI) + Maintenance Chatbot (GenAI)." },
+            { id: 2, cat: "Industry", title: "Visual Quality Control", desc: "Defect detection (Edge Vision) + Production Report Gen." },
+            { id: 3, cat: "Industry", title: "Smart Warehouse", desc: "Perishables monitor + Storage Optimization Advisor." },
+            { id: 4, cat: "Industry", title: "Worker Safety Monitor", desc: "PPE detection + Compliance Report Generator." },
+            { id: 5, cat: "Industry", title: "Predictive Maintenance", desc: "Predicting RUL (Remaining Useful Life) of pumps." },
+            { id: 6, cat: "City", title: "Intelligent Traffic", desc: "Car counting + Traffic Light Timing Optimizer." },
+            { id: 7, cat: "City", title: "Smart Waste Bin", desc: "Fill-level detection + Route Optimization Gen." },
+            { id: 8, cat: "City", title: "Structural Health", desc: "Bridge vibration analysis + Integrity Reports." },
+            { id: 9, cat: "City", title: "Acoustic Incident", desc: "Gunshot detection + Police Dispatch Summarizer." },
+            { id: 10, cat: "City", title: "Smart Parking Node", desc: "Occupancy detection + NLP 'Find my Spot'." },
+            { id: 11, cat: "Health", title: "Elderly Fall Guardian", desc: "Fall detection (IMU) + Voice Call Generator." },
+            { id: 12, cat: "Health", title: "Remote Cardiac Monitor", desc: "Arrhythmia classification + Patient Summary." },
+            { id: 13, cat: "Health", title: "Sleep Quality Lab", desc: "Noise/Movement analysis + Sleep Coach (GenAI)." },
+            { id: 14, cat: "Health", title: "Smart Physio Glove", desc: "Gesture tracking for rehab + Motivation Coach." },
+            { id: 15, cat: "Health", title: "Posture Wearable", desc: "Spine angle detection + Ergonomic Advisor." },
+            { id: 16, cat: "Home", title: "Energy Disaggregation", desc: "Appliance ID by power signature + Cost Advisor." },
+            { id: 17, cat: "Home", title: "Smart Pantry/Fridge", desc: "CV Inventory + Recipe Generator." },
+            { id: 18, cat: "Home", title: "Gesture Control Hub", desc: "Radar/Camera gesture recognition + Scene Gen." },
+            { id: 19, cat: "Home", title: "Smart Baby Monitor", desc: "Cry classification + Parenting Assistant." },
+            { id: 20, cat: "Home", title: "Security Sentry", desc: "Facial Rec + Visitor Log Summarizer." }
+        ];
+
+        // --- INITIALIZATION ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderComplexity();
+            renderSyllabus('phase1');
+            renderProjects('all');
+            initCharts();
+            
+            // Mobile Menu Toggle
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        // --- RENDERING LOGIC ---
+
+        function renderComplexity() {
+            const container = document.getElementById('complexity-accordion');
+            container.innerHTML = complexityLevels.map(lvl => `
+                <div class="bg-white border rounded-lg overflow-hidden shadow-sm ${lvl.color} hover-lift cursor-pointer" onclick="toggleComplexity(this)">
+                    <div class="p-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Level ${lvl.level}</span>
+                            <h4 class="font-bold text-slate-800">${lvl.title}</h4>
+                        </div>
+                        <span class="text-xs font-bold px-2 py-1 bg-slate-100 rounded text-slate-600">"${lvl.tagline}"</span>
+                    </div>
+                    <div class="px-4 pb-4 text-sm text-slate-600 hidden desc-panel">
+                        <p class="mb-2">${lvl.desc}</p>
+                        <div class="flex space-x-2">
+                            ${lvl.reqs.map(r => `<span class="bg-slate-100 text-slate-500 text-xs px-2 py-1 rounded border border-slate-200">${r}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleComplexity(element) {
+            const panel = element.querySelector('.desc-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        function renderSyllabus(phase) {
+            const grid = document.getElementById('syllabus-grid');
+            const data = syllabusData[phase];
+            
+            grid.innerHTML = data.map((item, index) => `
+                <div onclick="showWeekDetail('${phase}', ${index})" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 cursor-pointer hover:border-blue-400 hover:shadow-md transition-all group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <span class="text-6xl font-black text-slate-800">${item.week}</span>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-blue-600 uppercase mb-2 block">Week ${item.week}</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-1 leading-tight">${item.title}</h3>
+                        <p class="text-sm text-slate-500 truncate">${item.topic}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Hide detail on switch
+            document.getElementById('week-detail').classList.add('hidden');
+        }
+
+        function switchPhase(phase) {
+            renderSyllabus(phase);
+            
+            // Toggle Tab Styles
+            const btn1 = document.getElementById('tab-phase1');
+            const btn2 = document.getElementById('tab-phase2');
+            
+            if (phase === 'phase1') {
+                btn1.classList.add('tab-active', 'text-slate-800');
+                btn1.classList.remove('text-slate-500');
+                btn2.classList.remove('tab-active', 'text-slate-800');
+                btn2.classList.add('text-slate-500');
+            } else {
+                btn2.classList.add('tab-active', 'text-slate-800');
+                btn2.classList.remove('text-slate-500');
+                btn1.classList.remove('tab-active', 'text-slate-800');
+                btn1.classList.add('text-slate-500');
+            }
+        }
+
+        function showWeekDetail(phase, index) {
+            const data = syllabusData[phase][index];
+            const detail = document.getElementById('week-detail');
+            
+            document.getElementById('detail-week-num').textContent = `Week ${data.week} Details`;
+            document.getElementById('detail-title').textContent = data.title;
+            document.getElementById('detail-topics').innerHTML = `<li>${data.topic}</li><li>${data.desc}</li>`;
+            document.getElementById('detail-lab').textContent = `Focus: ${data.lab}`;
+            
+            detail.classList.remove('hidden');
+            detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function closeDetail() {
+            document.getElementById('week-detail').classList.add('hidden');
+        }
+
+        function renderProjects(category) {
+            const grid = document.getElementById('project-grid');
+            let filtered = projects;
+            if (category !== 'all') {
+                filtered = projects.filter(p => p.cat === category);
+            }
+
+            const getIcon = (cat) => {
+                if (cat === 'Industry') return '🏭';
+                if (cat === 'City') return '🏙️';
+                if (cat === 'Health') return '🏥';
+                return '🏠';
+            };
+
+            const getColor = (cat) => {
+                if (cat === 'Industry') return 'text-blue-600 bg-blue-50 border-blue-100';
+                if (cat === 'City') return 'text-purple-600 bg-purple-50 border-purple-100';
+                if (cat === 'Health') return 'text-rose-600 bg-rose-50 border-rose-100';
+                return 'text-emerald-600 bg-emerald-50 border-emerald-100';
+            };
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-lg border border-slate-200 p-5 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2 py-1 rounded ${getColor(p.cat)} uppercase">${getIcon(p.cat)} ${p.cat}</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg mb-2">${p.title}</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed">${p.desc}</p>
+                </div>
+            `).join('');
+            
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if(btn.textContent.includes(category === 'all' ? 'All' : category) || (category === 'Industry' && btn.textContent.includes('Industry'))) {
+                    btn.classList.add('bg-slate-800', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-600');
+                } else {
+                    btn.classList.remove('bg-slate-800', 'text-white');
+                    btn.classList.add('bg-white', 'text-slate-600');
+                }
+            });
+        }
+
+        function filterProjects(cat) {
+            renderProjects(cat);
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- CHART JS IMPLEMENTATION ---
+
+        function initCharts() {
+            // Label Wrapping Helper (16 chars)
+            function wrapLabel(label) {
+                if (label.length <= 16) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let line = words[0];
+                for(let i=1; i<words.length; i++) {
+                    if((line + " " + words[i]).length < 16) {
+                        line += " " + words[i];
+                    } else {
+                        lines.push(line);
+                        line = words[i];
+                    }
+                }
+                lines.push(line);
+                return lines;
+            }
+
+            const commonTooltip = {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        const label = item.chart.data.labels[item.dataIndex];
+                        return Array.isArray(label) ? label.join(' ') : label;
+                    }
+                }
+            };
+
+            // 1. Growth Chart (Simple Bar)
+            new Chart(document.getElementById('growthChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024', '2025 (Est)'],
+                    datasets: [{
+                        label: 'Connected Devices (Billions)',
+                        data: [11.3, 13.8, 16.4, 20.0, 27.1, 39.9],
+                        backgroundColor: '#2563EB',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: commonTooltip },
+                    scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }
+                }
+            });
+
+            // 2. Assessment Chart (Doughnut)
+            new Chart(document.getElementById('assessmentChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Project (Tech Impl)', 'Weekly Defense', 'Final Report', 'Participation'],
+                    datasets: [{
+                        data: [50, 20, 20, 10],
+                        backgroundColor: ['#2563EB', '#06B6D4', '#F59E0B', '#94A3B8'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { position: 'bottom' }, 
+                        tooltip: commonTooltip 
+                    }
+                }
+            });
+
+            // 3. Skills Chart (Radar)
+            const skillLabels = ['Embedded/Hardware', 'Network/Connectivity', 'AI/ML (Edge)', 'Security (Zero Trust)', 'Business/GenAI'];
+            new Chart(document.getElementById('skillsChart'), {
+                type: 'radar',
+                data: {
+                    labels: skillLabels.map(wrapLabel),
+                    datasets: [{
+                        label: 'Target Profile',
+                        data: [90, 85, 80, 75, 70],
+                        backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                        borderColor: '#06B6D4',
+                        pointBackgroundColor: '#06B6D4'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#E2E8F0' },
+                            grid: { color: '#E2E8F0' },
+                            pointLabels: { font: { size: 10 } },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: { legend: { display: false }, tooltip: commonTooltip }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
