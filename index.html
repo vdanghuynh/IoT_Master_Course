@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced IoT Technology | Course Explorer</title>
+    <title>Advanced IoT Technology | Dr. Dang Van Huynh</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -69,12 +69,12 @@
 
     <!-- 
         Application Structure Plan:
-        1. Hero Section: Hook with "Cognitive Twin" concept and key 2025 stats.
+        1. Hero Section: Hook with "Cognitive Twin" concept, Instructor Name, and key 2025 stats.
         2. Dashboard Section: High-level metrics (Device growth) and Course Philosophy (Levels of Complexity).
         3. Syllabus Section (Interactive): 12-Week Timeline. Users click weeks to see deep-dive topics/readings.
         4. Project Hub (Interactive): A filterable grid of the 20 Capstone Projects. Users filter by 'Industry' or 'Home'.
         5. Assessment Section: Charts showing grading breakdown and target skill mix.
-        6. Footer: Standard course info.
+        6. Footer: Instructor's Full Affiliation (UIT/VNUHCM) and Contact Info.
     -->
     
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
@@ -117,10 +117,17 @@
             <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-tight">
                 From Telemetry to <span class="text-amber-400">Cognition</span>
             </h1>
-            <p class="text-xl md:text-2xl font-light text-blue-50 max-w-3xl mx-auto mb-10">
+            <p class="text-xl md:text-2xl font-light text-blue-50 max-w-3xl mx-auto mb-6">
                 Advanced Internet of Things Technology (M.Sc. 2025-2026)<br>
                 <span class="text-sm font-medium opacity-80 mt-2 block">Edge AI • Digital Twins • Matter • Generative AI</span>
             </p>
+            
+            <!-- Instructor Badge -->
+            <div class="inline-flex items-center bg-white/10 backdrop-blur-md rounded-full px-6 py-2 border border-white/20 mb-10">
+                <span class="text-amber-400 mr-2 text-xl">👨‍🏫</span>
+                <span class="font-semibold text-blue-50">Instructor: <span class="text-white">Dr. Dang Van Huynh</span></span>
+            </div>
+
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <button onclick="scrollToSection('projects')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
                     Explore Projects
@@ -277,12 +284,42 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="mb-4 text-slate-300 font-bold text-lg">M.Sc. Advanced Internet of Things Technology</p>
-            <p class="text-sm">Based on the 2025-2026 Academic Curriculum.</p>
-            <div class="mt-8 pt-8 border-t border-slate-800 text-xs">
-                Generated for Course Planning Visualization. No SVG or Mermaid JS used.
+    <footer class="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <!-- Column 1: Course Brand -->
+            <div class="text-center md:text-left">
+                <span class="text-2xl font-black text-blue-500 tracking-tighter block mb-4">IoT<span class="text-white">MASTER</span></span>
+                <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                    A Master of Science level course preparing engineers for the next decade of connectivity.
+                    Based on the 2025-2026 Academic Curriculum.
+                </p>
+                <div class="text-xs text-slate-600">
+                    Generated for Course Planning Visualization. No SVG or Mermaid JS used.
+                </div>
+            </div>
+
+            <!-- Column 2: Instructor & Dept Info -->
+            <div class="bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-700">
+                <h4 class="text-white font-bold text-lg mb-4 border-b border-slate-600 pb-2">Instructor Information</h4>
+                
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-blue-400 font-bold text-xl">Dr. Dang Van Huynh</p>
+                        <p class="text-slate-300 text-sm mt-1">Department of Computer Networks</p>
+                        <p class="text-slate-300 text-sm">Faculty of Computer Networks and Communications</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-white font-semibold text-sm">University of Information Technology, VNUHCM</p>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <a href="mailto:danghv@uit.edu.vn" class="inline-flex items-center text-amber-400 hover:text-amber-300 transition-colors font-medium">
+                            <span class="mr-2">✉️</span> danghv@uit.edu.vn
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
