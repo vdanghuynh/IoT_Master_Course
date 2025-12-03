@@ -69,12 +69,12 @@
 
     <!-- 
         Application Structure Plan:
-        1. Hero Section: Hook with "Cognitive Twin" concept, Instructor Name, and key 2025 stats.
-        2. Dashboard Section: High-level metrics (Device growth) and Course Philosophy (Levels of Complexity).
-        3. Syllabus Section (Interactive): 12-Week Timeline. Users click weeks to see deep-dive topics/readings.
-        4. Project Hub (Interactive): A filterable grid of the 20 Capstone Projects. Users filter by 'Industry' or 'Home'.
-        5. Assessment Section: Charts showing grading breakdown and target skill mix.
-        6. Footer: Instructor's Full Affiliation (UIT/VNUHCM) and Contact Info.
+        1. Hero Section: Hook with "Cognitive Twin" concept, Instructor Name.
+        2. Dashboard Section: High-level metrics and Levels of Complexity.
+        3. Syllabus Section (Interactive): 12-Week Timeline.
+        4. Project Hub (Interactive): Filterable Capstone Projects.
+        5. Assessment Section: Charts showing grading breakdown.
+        6. Footer: Instructor Info + University Logos (VNUHCM & UIT).
     -->
     
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
@@ -94,12 +94,10 @@
                     <button onclick="scrollToSection('projects')" class="text-slate-600 hover:text-blue-600 text-sm font-medium">Projects</button>
                     <button onclick="scrollToSection('assessment')" class="text-slate-600 hover:text-blue-600 text-sm font-medium">Assessment</button>
                 </div>
-                <!-- Mobile Menu Button (Simplified for SPA) -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-slate-600 hover:text-blue-600 focus:outline-none font-bold">MENU</button>
                 </div>
             </div>
-            <!-- Mobile Menu Dropdown -->
             <div id="mobile-menu" class="hidden md:hidden pb-4">
                 <div class="flex flex-col space-y-2">
                     <button onclick="scrollToSection('overview')" class="text-left px-2 py-1 text-slate-600">Overview</button>
@@ -144,7 +142,6 @@
 
         <!-- Section 1: Overview & Complexity Framework -->
         <section id="overview" class="mb-20">
-            <!-- Intro Paragraph -->
             <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
                 <div class="max-w-3xl mx-auto text-center mb-10">
                     <h2 class="text-3xl font-bold text-slate-900 mb-4">Course Context</h2>
@@ -153,16 +150,12 @@
                     </p>
                 </div>
 
-                <!-- Visualization: Market Context (Simple Stat) -->
-                <!-- Visualization & Content Choice: Simple Chart.js Bar to show scale. Goal: Inform/Context -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 mb-2">The "Levels of Complexity" Framework</h3>
                         <p class="text-slate-600 mb-6 text-sm">
                             We do not grade based on the "type" of project. We grade based on the <strong>depth of integration</strong>. Every group starts at Level 1 and aspires to reach Level 3.
                         </p>
-                        
-                        <!-- Interactive Complexity Accordion -->
                         <div class="space-y-4" id="complexity-accordion">
                             <!-- JS will populate this -->
                         </div>
@@ -186,7 +179,6 @@
                 <p class="text-slate-600 mt-2">Click on any week to reveal the learning modules and lab focus.</p>
             </div>
 
-            <!-- Tab Navigation for Phases -->
             <div class="flex justify-center mb-8 border-b border-slate-200">
                 <button id="tab-phase1" class="px-6 py-3 text-lg font-medium tab-active transition-colors" onclick="switchPhase('phase1')">
                     Phase 1: Theory (Weeks 1-8)
@@ -196,12 +188,10 @@
                 </button>
             </div>
 
-            <!-- Timeline Grid -->
             <div id="syllabus-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- JS will populate weeks here -->
             </div>
             
-            <!-- Detail View Modal (Inline) -->
             <div id="week-detail" class="hidden mt-8 bg-blue-50 border border-blue-100 rounded-xl p-6 shadow-inner transition-all duration-300">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                     <div>
@@ -232,7 +222,6 @@
                         Select a vertical. Your goal is to build a "Vertical Slice" solution achieving Level 3 complexity: Hardware + Edge AI + Twin + GenAI.
                     </p>
                 </div>
-                <!-- Filters -->
                 <div class="flex space-x-2 mt-4 md:mt-0 overflow-x-auto pb-1">
                     <button onclick="filterProjects('all')" class="filter-btn bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:bg-slate-700 transition">All</button>
                     <button onclick="filterProjects('Industry')" class="filter-btn bg-white text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 transition">Industry 4.0</button>
@@ -242,7 +231,6 @@
                 </div>
             </div>
 
-            <!-- Project Grid -->
             <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- JS will populate projects -->
             </div>
@@ -256,26 +244,17 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Grading Chart -->
                 <div class="flex flex-col items-center">
                     <h3 class="text-lg font-bold text-slate-800 mb-4">Grading Composition</h3>
                     <div class="chart-container">
                         <canvas id="assessmentChart"></canvas>
                     </div>
-                    <div class="mt-6 text-sm text-slate-500 text-center max-w-sm">
-                        50% of the grade comes from the technical implementation of the Capstone project, incentivizing the "Level 3" integration.
-                    </div>
                 </div>
 
-                <!-- Skills Radar -->
-                <!-- Visualization Choice: Radar Chart to show the "T-shaped" skill profile mentioned in text. Goal: Compare/Profile -->
                 <div class="flex flex-col items-center">
                     <h3 class="text-lg font-bold text-slate-800 mb-4">Target Skill Profile</h3>
                     <div class="chart-container">
                         <canvas id="skillsChart"></canvas>
-                    </div>
-                    <div class="mt-6 text-sm text-slate-500 text-center max-w-sm">
-                        Graduates develop deep expertise in Embedded Systems & Networking while gaining breadth in AI & Business Logic.
                     </div>
                 </div>
             </div>
@@ -285,7 +264,7 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
             
             <!-- Column 1: Course Brand -->
             <div class="text-center md:text-left">
@@ -295,11 +274,32 @@
                     Based on the 2025-2026 Academic Curriculum.
                 </p>
                 <div class="text-xs text-slate-600">
-                    Generated for Course Planning Visualization. No SVG or Mermaid JS used.
+                    Generated for Course Planning Visualization.
                 </div>
             </div>
 
-            <!-- Column 2: Instructor & Dept Info -->
+            <!-- Column 2: Academic Affiliation (Logos) -->
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 flex flex-col items-center justify-center">
+                <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Academic Affiliation</h4>
+                <div class="flex items-center space-x-6 bg-white p-4 rounded-lg w-full justify-center">
+                    <!-- VNUHCM Logo -->
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/91/Vietnam_National_University_Ho_Chi_Minh_City_Logo.svg/100px-Vietnam_National_University_Ho_Chi_Minh_City_Logo.svg.png" 
+                         alt="VNUHCM Logo" 
+                         class="h-16 w-auto object-contain"
+                         title="Vietnam National University Ho Chi Minh City">
+                    
+                    <!-- Divider -->
+                    <div class="h-12 w-px bg-slate-200"></div>
+
+                    <!-- UIT Logo -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Logo_UIT_updated.jpg/100px-Logo_UIT_updated.jpg" 
+                         alt="UIT Logo" 
+                         class="h-12 w-auto object-contain"
+                         title="University of Information Technology">
+                </div>
+            </div>
+
+            <!-- Column 3: Instructor & Dept Info -->
             <div class="bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-700">
                 <h4 class="text-white font-bold text-lg mb-4 border-b border-slate-600 pb-2">Instructor Information</h4>
                 
@@ -405,7 +405,6 @@
             renderProjects('all');
             initCharts();
             
-            // Mobile Menu Toggle
             document.getElementById('mobile-menu-btn').addEventListener('click', () => {
                 const menu = document.getElementById('mobile-menu');
                 menu.classList.toggle('hidden');
@@ -457,14 +456,11 @@
                 </div>
             `).join('');
 
-            // Hide detail on switch
             document.getElementById('week-detail').classList.add('hidden');
         }
 
         function switchPhase(phase) {
             renderSyllabus(phase);
-            
-            // Toggle Tab Styles
             const btn1 = document.getElementById('tab-phase1');
             const btn2 = document.getElementById('tab-phase2');
             
@@ -529,7 +525,6 @@
                 </div>
             `).join('');
             
-            // Update button styles
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 if(btn.textContent.includes(category === 'all' ? 'All' : category) || (category === 'Industry' && btn.textContent.includes('Industry'))) {
                     btn.classList.add('bg-slate-800', 'text-white');
@@ -552,7 +547,6 @@
         // --- CHART JS IMPLEMENTATION ---
 
         function initCharts() {
-            // Label Wrapping Helper (16 chars)
             function wrapLabel(label) {
                 if (label.length <= 16) return label;
                 const words = label.split(' ');
@@ -580,7 +574,6 @@
                 }
             };
 
-            // 1. Growth Chart (Simple Bar)
             new Chart(document.getElementById('growthChart'), {
                 type: 'bar',
                 data: {
@@ -600,7 +593,6 @@
                 }
             });
 
-            // 2. Assessment Chart (Doughnut)
             new Chart(document.getElementById('assessmentChart'), {
                 type: 'doughnut',
                 data: {
@@ -621,7 +613,6 @@
                 }
             });
 
-            // 3. Skills Chart (Radar)
             const skillLabels = ['Embedded/Hardware', 'Network/Connectivity', 'AI/ML (Edge)', 'Security (Zero Trust)', 'Business/GenAI'];
             new Chart(document.getElementById('skillsChart'), {
                 type: 'radar',
